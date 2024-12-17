@@ -9,7 +9,7 @@ public class ConnectedClient extends Thread {
 
     private static int idCounter = 0;
 
-    private int id;
+    private int idc;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -18,11 +18,11 @@ public class ConnectedClient extends Thread {
     public ConnectedClient(Server server, Socket socket) {
         this.server = server;
         this.socket =socket;
-        this.id = idCounter;
+        this.idc = idCounter;
         idCounter++;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("Nouvelle connexion, id = " + id);
+            System.out.println("Nouvelle connexion, id = " + idc);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +38,7 @@ public class ConnectedClient extends Thread {
     }
 
     public int getClientId(){
-        return this.id;
+        return this.idc;
     }
 
     public void closeClient() {
@@ -64,8 +64,8 @@ public class ConnectedClient extends Thread {
                 if (mess == null) {
                     throw new IOException("Client déconnecté");
                 } else{
-                    mess.setSender(Long.parseLong(String.valueOf(id)));
-                    server.broadcastMessage(mess, id);
+                    mess.setSender(Long.parseLong(String.valueOf(idc)));
+                    server.broadcastMessage(mess, idc);
                 }
             }
             server.disconnectedClient(this);
