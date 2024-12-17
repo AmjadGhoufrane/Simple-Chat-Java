@@ -30,6 +30,7 @@ public class Server {
                 client.sendMessage(mess);
             }
         }
+        System.out.println(mess);
     }
 
     public void disconnectedClient(ConnectedClient diss){
